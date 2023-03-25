@@ -6,7 +6,10 @@ const app = express();
 const port = 3000;
 
 // Importation et configuration de Mustache pour le rendu des vues
-
+const mustacheExpress = require('mustache-express');
+const bodyParser = require('body-parser');
+const fs = require('fs');
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 // Configuration de l'application pour utiliser bodyParser (pour lire les données POST)
@@ -18,8 +21,8 @@ const port = 3000;
 // Associe Mustache à l'extension de fichier .mustache
 
 // Route GET pour la page d'accueil
-app.get('/', function(req, res) {
- 
+app.get('/', function (req, res) {
+
 });
 
 // Démarrage du serveur sur le port spécifié
