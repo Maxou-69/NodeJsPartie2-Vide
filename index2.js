@@ -8,30 +8,33 @@ const app = express();
 const port = 3000;
 
 // Importation et configuration de Mustache pour le rendu des vues
+const mustacheExpress = require('mustache-express');
+const bodyParser = require('body-parser');
+const fs = require('fs');
 
 
 // Configuration de l'application pour utiliser bodyParser (pour lire les données POST)
-
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Configuration du moteur de rendu des vues
-// Spécifie le dossier contenant les vues
-// Définit Mustache comme moteur de rendu des vues
-// Associe Mustache à l'extension de fichier .mustache
+app.set('views', __dirname + '/views'); // Spécifie le dossier contenant les vues
+app.set('view engine', 'mustache'); // Définit Mustache comme moteur de rendu des vues
+app.engine('mustache', mustacheExpress()); // Associe Mustache à l'extension de fichier .mustache
 
 // Route GET pour la page d'accueil
 app.get('/', (req, res) => {
   // Lecture et parsing du fichier JSON contenant les personnages Marvel
-
+  const personnages = JSON.parse(fs.readFileSync('marvel.json'));
   // Création d'un message de succès si un personnage a été créé
- 
-  if(req.query.success === '1'){
-    
-      // Rendu de la vue index avec les données des personnages et le message de succès
 
-  } else{
-    
-      // Rendu de la vue index avec les données des personnages et le message de succès
-
+  if (req.query.success === '1') {
+    const message = 'Votre personnage à été créé!';
+    // Rendu de la vue index avec les données des personnages et le message de succès
+    res.render('index', { personnages, message });
+  } else {
+    const message = '';
+    // Rendu de la vue index avec les données des personnages et le message de succès
+    res.render('index', { personnages, message });
   };
 
 });
@@ -39,15 +42,21 @@ app.get('/', (req, res) => {
 // Route POST pour ajouter un nouveau personnage
 app.post('/', (req, res) => {
   // Lecture et parsing du fichier JSON contenant les personnages Marvel
-  
+  const personnages = JSON.parse(fs.readFileSync('marvel.json'));
+
 
   // Création d'un objet représentant le nouveau personnage à partir des données du formulaire
- 
+  const nouveauPersonnage = {
+    nom: req.body.nom,
+    serie: req.body.serie,
+    image: req.body.image,
+    description: req.body.description,
+  }
   // Ajout du nouveau personnage à la liste des personnages
- 
+  personnages.push(nouveauPersonnage)
 
   // Écriture des personnages mis à jour dans le Marvel.Json et indentation automatique grâce aux parametres de Filesystem.
-
+  fs.writeFileSync('marvel.json', JSON.stringify(personnages, null, 4));
   // Redirection vers la page d'accueil avec un paramètre de succès
   res.redirect('/?success=1');
 });
