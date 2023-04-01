@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
+</head>
+
+<body>
+    <form method="post">
+        <div>
+            <label for="name">Nom&nbsp;:</label>
+            <input type="text" id="name" name="user_name" />
+            <div>
+                <div>
+                    <label for="serie">Série&nbsp;:</label>
+                    <input type="text" id="serie" name="serie" />
+                </div>
+                <div>
+                    <label for="image">image&nbsp;:</label>
+                    <input type="text" id="image" name="image" />
+                </div>
+                <div>
+                    <label for="description">description</label>
+                    <textarea id="description" name="description"></textarea>
+                </div>
+                <button type="submit">submit</button>
+    </form>
+    <ul>
+        {{#personnages}}
+        <li>{{nom}}</li>
+        <li><img src="{{image}}" width="150px"></li>
+        {{/personnages}}
+    </ul>
+</body>
+
+</html>

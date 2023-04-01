@@ -23,7 +23,6 @@ app.engine('mustache', mustacheExpress()); // Associe Mustache à l'extension de
 
 // Route GET pour la page d'accueil
 app.get('/', function (req, res) {
-  res.render('mon_template', { Myname: "Maxime" });
 });
 
 // Démarrage du serveur sur le port spécifié
