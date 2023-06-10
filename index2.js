@@ -7,13 +7,17 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
+
 // Importation et configuration de Mustache pour le rendu des vues
 const mustacheExpress = require('mustache-express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 
+// Serveur pour les fichiers statiques
+app.use(express.static('assets'));
 
 // Configuration de l'application pour utiliser bodyParser (pour lire les données POST)
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Configuration du moteur de rendu des vues
